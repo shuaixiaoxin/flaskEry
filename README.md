@@ -47,7 +47,28 @@ flask db upgrade
 flask create_user root 123456
 ```
 
-- 启动
+- 启动flask
 ```shell
 python3 api.py
+```
+
+- 启动celery
+```shell
+celery -A app.celery_task.init_celery.celery worker -l info
+```
+
+- 启动周期任务
+```shell
+celery -A app.celery_task.cron.celery_beat worker -l info
+celery -A app.celery_task.cron.celery_beat beat -l info
+```
+
+注：如果是windows启动则可以使用以下方式启动：
+```shell
+# celery
+celery -A app.celery_task.init_celery.celery worker -l info -P eventlet
+# beat
+celery -A app.celery_task.cron.celery_beat worker -l info -P eventlet
+# beat
+celery -A app.celery_task.cron.celery_beat beat -l info
 ```
