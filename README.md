@@ -19,7 +19,7 @@
 
 - 下载项目
 ```shell
-git clone git@github.com:shuaixiaoxin/Flaskery.git
+git clone git@github.com:shuaixiaoxin/flaskEry.git
 ```
 
 - 修改项目配置文件
@@ -63,7 +63,7 @@ celery -A app.celery_task.cron.celery_beat worker -l info
 celery -A app.celery_task.cron.celery_beat beat -l info
 ```
 
-注：如果是windows启动则可以使用以下方式启动：
+如果是windows启动则可以使用以下方式启动：
 ```shell
 # celery
 celery -A app.celery_task.init_celery.celery worker -l info -P eventlet
