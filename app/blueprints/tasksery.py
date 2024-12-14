@@ -10,12 +10,14 @@ from flask import Blueprint
 from flask_restful import Resource
 from app.utils.response import CustomResponse
 from app.celery_task.tasks import celeryTask
+from app.plugin.exts import limiter
 
 
 task_blueprint = Blueprint('task', __name__, url_prefix='/tasks')
 
 
 class celery_task(Resource):
+    # @limiter.limit('2/minute')
     def get(self):
-        celeryTask.apply_async(kwargs={"code": 0, "data": None})
+        # celeryTask.apply_async(kwargs={"code": 0, "data": None})
         return CustomResponse.make_response(code=200, message='异步任务提交成功.')

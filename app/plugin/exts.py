@@ -13,6 +13,8 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_caching import Cache
 from app.utils.LogHandler import getLogHandler
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 
 api = Api()
@@ -20,6 +22,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
 cache = Cache()
+limiter = Limiter(key_func=get_remote_address, default_limits=['1/minute'])
 
 
 def init_ext(app):
@@ -28,5 +31,6 @@ def init_ext(app):
     db.init_app(app=app)
     migrate.init_app(app=app, db=db)
     cache.init_app(app=app, config={'CACHE_TYPE': 'simple'})
+    limiter.init_app(app=app)
 
     app.logger.addHandler(getLogHandler())

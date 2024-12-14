@@ -13,3 +13,4 @@ flask-siwadoc==0.2.2
 flower==2.0.1
 importlib-metadata==4.13.0
 requests==2.31.0
+flask-limiter==3.9.2

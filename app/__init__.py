@@ -14,6 +14,8 @@ from app.conf.settings import DevelopmentConfig, Config
 from app.plugin.exts import init_ext
 from app.urls import *
 from app.utils.commands import register_user
+from flask import jsonify
+from flask_limiter.errors import RateLimitExceeded
 
 
 def create_app():
@@ -33,6 +35,14 @@ def create_app():
     # def handle_after_request(response):
     #     """在每次请求之后都被执行"""
     #     pass
+
+    @app.errorhandler(RateLimitExceeded)
+    def handle_ratelimit_error(e):
+        return jsonify({
+            "error": "Too many requests",
+            "status_code": 429,
+            "details": str(e.description)  # 包含限流的详细信息
+        }), 429
 
     # 初始化插件
     init_ext(app)
